@@ -41,7 +41,7 @@ function App() {
       </header>
       
       <main className="app-main">
-        <TaskForm />
+        <TaskForm setTasks={setTasks} />
         
         {loading && <p className="loading">Loading tasks...</p>}
         {error && <p className="error">Error: {error}</p>}
