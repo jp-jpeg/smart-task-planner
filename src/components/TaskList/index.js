@@ -1,7 +1,20 @@
-function TaskList() {
+import TaskItem from '../TaskItem';
+
+function TaskList({ tasks }) {
   return (
-    <div>
-      <h2>Task List</h2>
+    <div className="task-list">
+      <h2>Tasks ({tasks.length})</h2>
+      {tasks.length === 0 ? (
+        <p className="empty-state">No tasks yet. Create one to get started!</p>
+      ) : (
+        <ul>
+          {tasks.map((task) => (
+            <li key={task.id}>
+              <TaskItem task={task} />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
