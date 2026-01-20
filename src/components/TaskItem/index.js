@@ -1,8 +1,21 @@
-function TaskItem({ task }) {
+function TaskItem({ task, onToggleComplete }) {
+  const handleToggleClick = () => {
+    onToggleComplete(task.id, task.completed);
+  };
+
   return (
-    <div className="task-item">
+    <div className={`task-item ${task.completed ? 'completed' : ''}`}>
       <div className="task-header">
-        <h3>{task.title}</h3>
+        <div className="task-title-group">
+          <button
+            className="checkbox-btn"
+            onClick={handleToggleClick}
+            title={task.completed ? 'Mark as active' : 'Mark as completed'}
+          >
+            {task.completed ? '✓' : '○'}
+          </button>
+          <h3>{task.title}</h3>
+        </div>
         <span className={`priority priority-${task.priority}`}>
           {task.priority}
         </span>

@@ -32,6 +32,35 @@ function App() {
 
     fetchTasks();
   }, []); // Dependency array - empty means run once on mount
+  // Toggle task completion status
+  const toggleTaskCompletion = async (taskId, currentStatus) => {
+    try {
+      const response = await fetch(`http://localhost:3001/tasks/${taskId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          completed: !currentStatus
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update task');
+      }
+
+      const updatedTask = await response.json();
+
+      // Update tasks state with the updated task
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === taskId ? updatedTask : task
+        )
+      );
+    } catch (err) {
+      console.error('Error toggling task completion:', err);
+    }
+  };
 
   return (
     <div className="app-container">
@@ -45,7 +74,7 @@ function App() {
         
         {loading && <p className="loading">Loading tasks...</p>}
         {error && <p className="error">Error: {error}</p>}
-        {!loading && !error && <TaskList tasks={tasks} />}
+        {!loading && !error && <TaskList tasks={tasks} onToggleComplete={toggleTaskCompletion} />}
       </main>
     </div>
   );
