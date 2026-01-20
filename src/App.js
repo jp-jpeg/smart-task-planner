@@ -6,6 +6,17 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [filter, setFilter] = useState('all'); // 'all', 'active', 'completed'
+
+  // Derived state - filter tasks based on selected filter
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'completed') {
+      return task.completed;
+    } else if (filter === 'active') {
+      return !task.completed;
+    }
+    return true; // 'all' filter
+  });
 
   // Fetch tasks from json-server when component mounts
   useEffect(() => {
@@ -98,7 +109,9 @@ function App() {
         {error && <p className="error">Error: {error}</p>}
         {!loading && !error && (
           <TaskList 
-            tasks={tasks} 
+            tasks={filteredTasks}
+            filter={filter}
+            onFilterChange={setFilter}
             onToggleComplete={toggleTaskCompletion}
             onDeleteTask={deleteTask}
           />
