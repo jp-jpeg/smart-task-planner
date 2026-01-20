@@ -1,6 +1,6 @@
 import TaskItem from '../TaskItem';
 
-function TaskList({ tasks, onToggleComplete }) {
+function TaskList({ tasks, onToggleComplete, onDeleteTask }) {
   return (
     <div className="task-list">
       <h2>Tasks ({tasks.length})</h2>
@@ -13,6 +13,7 @@ function TaskList({ tasks, onToggleComplete }) {
               <TaskItem 
                 task={task} 
                 onToggleComplete={onToggleComplete}
+                onDeleteTask={onDeleteTask}
               />
             </li>
           ))}

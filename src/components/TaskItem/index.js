@@ -1,6 +1,12 @@
-function TaskItem({ task, onToggleComplete }) {
+function TaskItem({ task, onToggleComplete, onDeleteTask }) {
   const handleToggleClick = () => {
     onToggleComplete(task.id, task.completed);
+  };
+
+  const handleDeleteClick = () => {
+    if (window.confirm(`Delete task "${task.title}"?`)) {
+      onDeleteTask(task.id);
+    }
   };
 
   return (
@@ -16,9 +22,18 @@ function TaskItem({ task, onToggleComplete }) {
           </button>
           <h3>{task.title}</h3>
         </div>
-        <span className={`priority priority-${task.priority}`}>
-          {task.priority}
-        </span>
+        <div className="task-actions">
+          <span className={`priority priority-${task.priority}`}>
+            {task.priority}
+          </span>
+          <button
+            className="delete-btn"
+            onClick={handleDeleteClick}
+            title="Delete this task"
+          >
+            ✕
+          </button>
+        </div>
       </div>
       <p className="task-description">{task.description}</p>
       <div className="task-footer">

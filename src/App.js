@@ -62,6 +62,28 @@ function App() {
     }
   };
 
+  // Delete a task
+  const deleteTask = async (taskId) => {
+    // Optimistic UI update - remove from state immediately
+    const previousTasks = tasks;
+    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+
+    try {
+      const response = await fetch(`http://localhost:3001/tasks/${taskId}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete task');
+      }
+    } catch (err) {
+      // Revert state if deletion fails
+      setTasks(previousTasks);
+      console.error('Error deleting task:', err);
+      alert('Failed to delete task. Please try again.');
+    }
+  };
+
   return (
     <div className="app-container">
       <header className="app-header">
@@ -74,7 +96,13 @@ function App() {
         
         {loading && <p className="loading">Loading tasks...</p>}
         {error && <p className="error">Error: {error}</p>}
-        {!loading && !error && <TaskList tasks={tasks} onToggleComplete={toggleTaskCompletion} />}
+        {!loading && !error && (
+          <TaskList 
+            tasks={tasks} 
+            onToggleComplete={toggleTaskCompletion}
+            onDeleteTask={deleteTask}
+          />
+        )}
       </main>
     </div>
   );
