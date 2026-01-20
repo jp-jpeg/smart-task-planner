@@ -43,3 +43,39 @@ $box-shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
 // Transitions
 $transition-speed: 0.3s;
 $transition-timing: ease-in-out;
+
+// ===========================
+// Responsive Breakpoints (Mobile-First)
+// ===========================
+// Mobile-first: base styles for mobile, then add complexity for larger screens
+
+$breakpoint-sm: 576px;    // Small devices (landscape phones)
+$breakpoint-md: 768px;    // Medium devices (tablets)
+$breakpoint-lg: 992px;    // Large devices (desktops)
+$breakpoint-xl: 1200px;   // Extra large devices (large desktops)
+
+// Media query mixins for easy use
+@mixin respond-to-sm {
+  @media (min-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin respond-to-md {
+  @media (min-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+@mixin respond-to-lg {
+  @media (min-width: $breakpoint-lg) {
+    @content;
+  }
+}
+
+@mixin respond-to-xl {
+  @media (min-width: $breakpoint-xl) {
+    @content;
+  }
+}
+

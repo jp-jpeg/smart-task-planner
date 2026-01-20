@@ -1,3 +1,5 @@
+import './TaskItem.scss';
+
 function TaskItem({ task, onToggleComplete, onDeleteTask }) {
   const handleToggleClick = () => {
     onToggleComplete(task.id, task.completed);

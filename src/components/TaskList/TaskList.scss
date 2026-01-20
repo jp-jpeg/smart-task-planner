@@ -1,17 +1,44 @@
-// TaskList component styles
+@import '../../styles/variables';
+
 .task-list {
-  margin-top: 2rem;
+  margin-top: $spacing-md;
+
+  @include respond-to-md {
+    margin-top: $spacing-lg;
+  }
+
+  @include respond-to-lg {
+    margin-top: $spacing-xl;
+  }
 
   .task-list-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
-    gap: 1rem;
+    flex-direction: column;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+
+    @include respond-to-sm {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    @include respond-to-md {
+      gap: $spacing-lg;
+      margin-bottom: $spacing-xl;
+    }
 
     h2 {
       margin: 0;
+      font-size: $font-size-h2;
+
+      @include respond-to-md {
+        font-size: 28px;
+      }
+
+      @include respond-to-lg {
+        font-size: 32px;
+      }
     }
   }
 
@@ -19,28 +46,55 @@
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
+    width: 100%;
+
+    @include respond-to-sm {
+      width: auto;
+    }
+
+    @include respond-to-md {
+      gap: 0.75rem;
+    }
   }
 
   .filter-btn {
-    padding: 0.5rem 1rem;
-    border: 2px solid #e0e0e0;
+    flex: 1;
+    min-width: 100px;
+    padding: $spacing-sm $spacing-md;
+    border: 2px solid $border-color;
     background-color: white;
-    color: #333;
-    border-radius: 6px;
+    color: $text-color;
+    border-radius: $border-radius-md;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
-    transition: all 0.3s ease-in-out;
+    transition: all $transition-speed $transition-timing;
+
+    @include respond-to-sm {
+      flex: none;
+      min-width: 90px;
+    }
+
+    @include respond-to-md {
+      padding: $spacing-md $spacing-lg;
+      font-size: 14px;
+      min-width: 110px;
+    }
+
+    @include respond-to-lg {
+      font-size: 15px;
+      min-width: 120px;
+    }
 
     &:hover {
-      border-color: #4a90e2;
-      color: #4a90e2;
+      border-color: $primary-color;
+      color: $primary-color;
     }
 
     &.active {
-      background-color: #4a90e2;
+      background-color: $primary-color;
       color: white;
-      border-color: #4a90e2;
+      border-color: $primary-color;
     }
 
     &:disabled {
@@ -55,15 +109,31 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: $spacing-md;
+
+    @include respond-to-md {
+      gap: $spacing-lg;
+    }
+
+    @include respond-to-lg {
+      gap: $spacing-lg;
+    }
   }
 
   .empty-state {
     text-align: center;
-    padding: 2rem;
-    color: #999;
+    padding: $spacing-lg;
+    color: $text-light;
     font-style: italic;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+    background-color: white;
+    border-radius: $border-radius-lg;
+    border: 2px dashed $border-color;
+    font-size: $font-size-base;
+
+    @include respond-to-md {
+      padding: $spacing-xl;
+      font-size: $font-size-large;
+    }
   }
 }
+

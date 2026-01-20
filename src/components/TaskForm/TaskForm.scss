@@ -1,0 +1,99 @@
+@import '../../styles/variables';
+
+.task-form {
+  background: white;
+  padding: $spacing-md;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-md;
+
+  @include respond-to-md {
+    padding: $spacing-lg;
+  }
+
+  @include respond-to-lg {
+    padding: $spacing-xl;
+    max-width: 600px;
+  }
+
+  h2 {
+    margin-bottom: $spacing-lg;
+  }
+
+  .form-group {
+    margin-bottom: $spacing-md;
+
+    @include respond-to-md {
+      margin-bottom: $spacing-lg;
+    }
+
+    label {
+      display: block;
+      margin-bottom: $spacing-sm;
+      font-weight: 500;
+      color: $text-color;
+      font-size: $font-size-small;
+
+      @include respond-to-md {
+        font-size: $font-size-base;
+      }
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: $spacing-sm $spacing-md;
+      font-size: $font-size-base;
+
+      @include respond-to-md {
+        padding: $spacing-md;
+        font-size: $font-size-large;
+      }
+    }
+  }
+
+  .form-error {
+    color: $danger-color;
+    font-size: $font-size-small;
+    margin-bottom: $spacing-md;
+    padding: $spacing-sm;
+    background-color: rgba($danger-color, 0.1);
+    border-left: 3px solid $danger-color;
+    border-radius: $border-radius-sm;
+
+    @include respond-to-md {
+      font-size: $font-size-base;
+      padding: $spacing-md;
+    }
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: $spacing-md;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: $border-radius-md;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transition-speed $transition-timing;
+    font-size: $font-size-base;
+
+    @include respond-to-md {
+      font-size: $font-size-large;
+      padding: $spacing-lg;
+      width: auto;
+      min-width: 200px;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: darken($primary-color, 10%);
+      transform: translateY(-2px);
+      box-shadow: $box-shadow-lg;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}

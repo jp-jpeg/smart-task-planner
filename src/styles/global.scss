@@ -12,6 +12,14 @@
 
 html {
   font-size: $font-size-base;
+
+  @include respond-to-md {
+    font-size: 18px; // Slightly larger on tablets
+  }
+
+  @include respond-to-lg {
+    font-size: 16px; // Back to standard on large screens
+  }
 }
 
 body {
@@ -22,15 +30,30 @@ body {
   background-color: $background-color;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding: $spacing-md;
+
+  @include respond-to-md {
+    padding: $spacing-lg;
+  }
+
+  @include respond-to-lg {
+    padding: $spacing-xl;
+  }
 }
 
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @include respond-to-lg {
+    max-width: 1400px;
+  }
 }
 
-// Typography
+// Typography - Mobile-first sizes then scale up
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.2;
@@ -40,15 +63,35 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
   font-size: $font-size-h1;
+
+  @include respond-to-md {
+    font-size: 40px;
+  }
+
+  @include respond-to-lg {
+    font-size: 48px;
+  }
 }
 
 h2 {
   font-size: $font-size-h2;
+
+  @include respond-to-md {
+    font-size: 28px;
+  }
+
+  @include respond-to-lg {
+    font-size: 32px;
+  }
 }
 
 p {
   margin-bottom: $spacing-md;
   color: $text-color;
+
+  @include respond-to-md {
+    font-size: 17px;
+  }
 }
 
 // Links
@@ -62,15 +105,19 @@ a {
   }
 }
 
-// Buttons (placeholder styling)
+// Buttons
 button {
   font-family: $font-family;
   font-size: $font-size-base;
   cursor: pointer;
   transition: all $transition-speed $transition-timing;
+
+  @include respond-to-md {
+    font-size: 17px;
+  }
 }
 
-// Form elements
+// Form elements - Mobile-friendly sizing
 input,
 textarea,
 select {
@@ -79,6 +126,11 @@ select {
   border: 1px solid $border-color;
   border-radius: $border-radius-md;
   padding: $spacing-sm $spacing-md;
+  width: 100%;
+
+  @include respond-to-md {
+    font-size: 17px; // Prevents zoom on iOS
+  }
 
   &:focus {
     outline: none;
@@ -86,3 +138,83 @@ select {
     box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
   }
 }
+
+// Container styles
+.app-container {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  @include respond-to-md {
+    gap: $spacing-lg;
+  }
+
+  @include respond-to-lg {
+    gap: $spacing-xl;
+  }
+}
+
+.app-header {
+  text-align: center;
+  padding: $spacing-md;
+  background: linear-gradient(135deg, $primary-color, darken($primary-color, 10%));
+  color: white;
+  border-radius: $border-radius-lg;
+
+  @include respond-to-md {
+    padding: $spacing-lg;
+  }
+
+  @include respond-to-lg {
+    padding: $spacing-xl;
+  }
+
+  h1 {
+    color: white;
+    margin-bottom: $spacing-sm;
+  }
+
+  p {
+    color: rgba(white, 0.9);
+    margin-bottom: 0;
+  }
+}
+
+.app-main {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  @include respond-to-md {
+    gap: $spacing-lg;
+  }
+
+  @include respond-to-lg {
+    gap: $spacing-xl;
+  }
+}
+
+// Loading and error states
+.loading,
+.error {
+  padding: $spacing-lg;
+  border-radius: $border-radius-md;
+  text-align: center;
+  font-size: $font-size-base;
+
+  @include respond-to-md {
+    padding: $spacing-xl;
+    font-size: $font-size-large;
+  }
+}
+
+.loading {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.error {
+  background-color: #ffebee;
+  color: #c62828;
+}
+

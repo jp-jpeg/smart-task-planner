@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './TaskForm.scss';
 
 function TaskForm({ setTasks }) {
   // Controlled component state

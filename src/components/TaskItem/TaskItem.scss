@@ -1,0 +1,213 @@
+@import '../../styles/variables';
+
+.task-item {
+  background: white;
+  padding: $spacing-md;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-sm;
+  border-left: 4px solid $primary-color;
+  transition: all $transition-speed $transition-timing;
+
+  @include respond-to-md {
+    padding: $spacing-lg;
+  }
+
+  @include respond-to-lg {
+    padding: $spacing-lg;
+  }
+
+  &:hover {
+    box-shadow: $box-shadow-md;
+    transform: translateY(-2px);
+  }
+
+  &.completed {
+    opacity: 0.7;
+    background-color: #f5f5f5;
+
+    .task-title-group h3 {
+      text-decoration: line-through;
+      color: $text-light;
+    }
+  }
+
+  .task-header {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    margin-bottom: $spacing-md;
+
+    @include respond-to-sm {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: $spacing-md;
+    }
+
+    @include respond-to-md {
+      align-items: center;
+    }
+  }
+
+  .task-title-group {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+    flex: 1;
+    min-width: 0; // Allow text truncation
+
+    @include respond-to-md {
+      gap: $spacing-md;
+    }
+
+    h3 {
+      margin: 0;
+      word-break: break-word;
+      font-size: $font-size-base;
+
+      @include respond-to-md {
+        font-size: $font-size-large;
+      }
+    }
+  }
+
+  .checkbox-btn {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border: 2px solid $primary-color;
+    border-radius: 50%;
+    background-color: white;
+    color: $primary-color;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-speed $transition-timing;
+
+    @include respond-to-md {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+
+    &:hover {
+      background-color: $primary-color;
+      color: white;
+      box-shadow: $box-shadow-sm;
+    }
+  }
+
+  .task-actions {
+    display: flex;
+    gap: $spacing-sm;
+    align-items: center;
+
+    @include respond-to-md {
+      gap: $spacing-md;
+    }
+  }
+
+  .priority {
+    flex-shrink: 0;
+    padding: 4px 10px;
+    border-radius: $border-radius-sm;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    @include respond-to-md {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+
+    &.priority-high {
+      background-color: rgba($danger-color, 0.2);
+      color: $danger-color;
+    }
+
+    &.priority-medium {
+      background-color: rgba($warning-color, 0.2);
+      color: $warning-color;
+    }
+
+    &.priority-low {
+      background-color: rgba($success-color, 0.2);
+      color: $success-color;
+    }
+  }
+
+  .delete-btn {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border: 2px solid $danger-color;
+    background-color: white;
+    color: $danger-color;
+    border-radius: $border-radius-sm;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all $transition-speed $transition-timing;
+
+    @include respond-to-md {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+
+    &:hover {
+      background-color: $danger-color;
+      color: white;
+      box-shadow: $box-shadow-sm;
+    }
+  }
+
+  .task-description {
+    color: $text-light;
+    font-size: $font-size-small;
+    margin-bottom: $spacing-md;
+    line-height: 1.4;
+
+    @include respond-to-md {
+      font-size: $font-size-base;
+      margin-bottom: $spacing-lg;
+    }
+  }
+
+  .task-footer {
+    display: flex;
+    justify-content: flex-start;
+    gap: $spacing-sm;
+
+    @include respond-to-md {
+      gap: $spacing-md;
+    }
+
+    .status {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: $border-radius-sm;
+
+      @include respond-to-md {
+        font-size: 13px;
+        padding: 6px 12px;
+      }
+
+      &.pending {
+        background-color: rgba($primary-color, 0.2);
+        color: $primary-color;
+      }
+
+      &.completed {
+        background-color: rgba($success-color, 0.2);
+        color: $success-color;
+      }
+    }
+  }
+}
