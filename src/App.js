@@ -1,32 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 
 function App() {
-  // Hardcoded temporary tasks array
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: 'Learn React',
-      description: 'Understand React fundamentals and hooks',
-      completed: false,
-      priority: 'high'
-    },
-    {
-      id: 2,
-      title: 'Build a component',
-      description: 'Create a reusable task component',
-      completed: false,
-      priority: 'medium'
-    },
-    {
-      id: 3,
-      title: 'Add styling',
-      description: 'Style the application with SCSS',
-      completed: true,
-      priority: 'low'
-    }
-  ]);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch tasks from json-server when component mounts
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await fetch('http://localhost:3001/tasks');
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        setTasks(data);
+      } catch (err) {
+        setError(err.message);
+        console.error('Failed to fetch tasks:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTasks();
+  }, []); // Dependency array - empty means run once on mount
 
   return (
     <div className="app-container">
@@ -37,7 +42,10 @@ function App() {
       
       <main className="app-main">
         <TaskForm />
-        <TaskList tasks={tasks} />
+        
+        {loading && <p className="loading">Loading tasks...</p>}
+        {error && <p className="error">Error: {error}</p>}
+        {!loading && !error && <TaskList tasks={tasks} />}
       </main>
     </div>
   );
