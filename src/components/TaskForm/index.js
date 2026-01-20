@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './TaskForm.scss';
+import * as tasksApi from '../../api/tasksApi';
 
 function TaskForm({ setTasks }) {
   // Controlled component state
@@ -43,20 +44,8 @@ function TaskForm({ setTasks }) {
         dueDate: null
       };
 
-      // POST to json-server
-      const response = await fetch('http://localhost:3001/tasks', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newTask)
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create task');
-      }
-
-      const createdTask = await response.json();
+      // Create task via API
+      const createdTask = await tasksApi.createTask(newTask);
 
       // Update parent component's tasks state
       setTasks((prevTasks) => [...prevTasks, createdTask]);

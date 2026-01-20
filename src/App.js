@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
+import * as tasksApi from './api/tasksApi';
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -20,47 +21,26 @@ function App() {
 
   // Fetch tasks from json-server when component mounts
   useEffect(() => {
-    const fetchTasks = async () => {
+    const loadTasks = async () => {
       try {
         setLoading(true);
         setError(null);
-        
-        const response = await fetch('http://localhost:3001/tasks');
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const data = await response.json();
+        const data = await tasksApi.fetchTasks();
         setTasks(data);
       } catch (err) {
         setError(err.message);
-        console.error('Failed to fetch tasks:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchTasks();
+    loadTasks();
   }, []); // Dependency array - empty means run once on mount
+
   // Toggle task completion status
   const toggleTaskCompletion = async (taskId, currentStatus) => {
     try {
-      const response = await fetch(`http://localhost:3001/tasks/${taskId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          completed: !currentStatus
-        })
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to update task');
-      }
-
-      const updatedTask = await response.json();
+      const updatedTask = await tasksApi.toggleTaskCompletion(taskId, currentStatus);
 
       // Update tasks state with the updated task
       setTasks((prevTasks) =>
@@ -80,13 +60,7 @@ function App() {
     setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
 
     try {
-      const response = await fetch(`http://localhost:3001/tasks/${taskId}`, {
-        method: 'DELETE'
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete task');
-      }
+      await tasksApi.deleteTask(taskId);
     } catch (err) {
       // Revert state if deletion fails
       setTasks(previousTasks);
